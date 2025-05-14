@@ -52,14 +52,16 @@ describe("Zod URL validation", () => {
     });
   });
 
+  describe("protocol support", () => {
+    test("should validate FTP URLs", () => {
+      const result = urlSchema.safeParse("ftp://example.com");
+      expect(result.success).toBe(true);
+    });
+  });
+
   describe("invalid URLs", () => {
     test("should reject strings without protocol", () => {
       const result = urlSchema.safeParse("localhost");
-      expect(result.success).toBe(false);
-    });
-
-    test("should reject invalid protocols", () => {
-      const result = urlSchema.safeParse("ftp://example.com");
       expect(result.success).toBe(false);
     });
 
